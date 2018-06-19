@@ -2,7 +2,7 @@
 extern "C" {
 #endif
 
-extern int Gah();
+extern int Gah(int x);
 
 #ifdef __cplusplus
 }

@@ -1,5 +1,6 @@
 #include <iostream>
-extern "C" int Gah() {
-    std::cout << "yo";
-    return 32;
+#include "try.h"
+extern "C" int Gah(int x) {
+    std::cout << "yo" << std::endl;
+    return x;
 }

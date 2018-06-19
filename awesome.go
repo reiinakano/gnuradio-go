@@ -36,7 +36,6 @@ func Init(scale float32, invert bool) int {
 
 //export Work
 func Work(in []float32, out []float32, confIdx int) int {
-  C.Gah()
   fmt.Println(in)
   fmt.Println(out)
   conf := Storage[confIdx]
@@ -48,6 +47,7 @@ func Work(in []float32, out []float32, confIdx int) int {
     }
   }
   conf.Scale *= 2
+  fmt.Println(C.Gah(2))
   return len(in)
 }
 

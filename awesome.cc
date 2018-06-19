@@ -39,5 +39,5 @@ int main() {
         printf("%f,", (out)[i]);
     }
     printf("\n");
-    Gah();
+    printf("%d", Gah(3));
 }
