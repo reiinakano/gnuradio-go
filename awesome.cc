@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "awesome.h"
+#include "try.h"
 int main() {
     GoInt s = Init(3.2, 1);
     GoFloat32 data[6] = {77, 12, 5, 99, 28, 23};
@@ -38,4 +39,5 @@ int main() {
         printf("%f,", (out)[i]);
     }
     printf("\n");
+    Gah();
 }

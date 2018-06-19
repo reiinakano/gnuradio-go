@@ -1,5 +1,7 @@
 package main
 
+// #cgo LDFLAGS: -L ${SRCDIR} -ltry
+// #include "try.h"
 import "C"
 import (
  "fmt"
@@ -34,6 +36,7 @@ func Init(scale float32, invert bool) int {
 
 //export Work
 func Work(in []float32, out []float32, confIdx int) int {
+  C.Gah()
   fmt.Println(in)
   fmt.Println(out)
   conf := Storage[confIdx]
