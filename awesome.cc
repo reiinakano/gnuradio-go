@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <iostream>
 #include <functional>
 #include "awesome.h"
 #include "try.h"
@@ -12,24 +13,28 @@ class Test
 public:
   void callback() {
       printf("I'm a callback from inside a freaking class!\n");
+      std::cout << a_ << std::endl;
   }
   
   unsigned long long get_ptr() {
-      ptr = new std::function<void()>(
+      ptr_ = new std::function<void()>(
           std::bind(&Test::callback, this));
-      return reinterpret_cast<unsigned long long>(ptr);
+      return reinterpret_cast<unsigned long long>(ptr_);
   }
 
+  Test(std::string a) : a_(a) {}
+
   ~Test() {
-      delete ptr;
+      delete ptr_;
   }
 
 private:
-  std::function<void()> *ptr;
+  std::string a_;
+  std::function<void()> *ptr_;
 };
 
 int main() {
-    Test test;
+    Test test("hi");
     unsigned long long ptr = test.get_ptr();
 
     GoInt s = Init(3.2, 1, ptr);
