@@ -2,7 +2,7 @@
 extern "C" {
 #endif
 
-extern int Gah(int x);
+extern void No(unsigned long long ptr);
 
 #ifdef __cplusplus
 }

@@ -1,6 +1,10 @@
 #include <iostream>
+#include <functional>
+
 #include "try.h"
-extern "C" int Gah(int x) {
-    std::cout << "yo" << std::endl;
-    return x;
+
+extern "C" void No(unsigned long long ptr) {
+    std::function<void()> *f = 
+        reinterpret_cast<std::function<void()> *>(ptr);
+    (*f)();
 }

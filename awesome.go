@@ -17,18 +17,20 @@ func Ma(in [][]float32) int {
 type Configuration struct {
   Scale float32;
   Invert bool;
+  CallbackPtr uint64;
 }
 
 var storageMutex sync.Mutex
 var Storage []*Configuration
 
 //export Init
-func Init(scale float32, invert bool) int {
+func Init(scale float32, invert bool, callbackPtr uint64) int {
   storageMutex.Lock()
   defer storageMutex.Unlock()
   config := &Configuration{
     Scale: scale,
     Invert: invert,
+    CallbackPtr: callbackPtr,
   }
   Storage = append(Storage, config)
   return len(Storage) - 1
@@ -47,7 +49,7 @@ func Work(in []float32, out []float32, confIdx int) int {
     }
   }
   conf.Scale *= 2
-  fmt.Println(C.Gah(2))
+  C.No(C.ulonglong(conf.CallbackPtr));
   return len(in)
 }
 

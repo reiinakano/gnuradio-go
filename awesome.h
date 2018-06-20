@@ -72,7 +72,7 @@ extern "C" {
 
 extern GoInt Ma(GoSlice p0);
 
-extern GoInt Init(GoFloat32 p0, GoUint8 p1);
+extern GoInt Init(GoFloat32 p0, GoUint8 p1, GoUint64 p2);
 
 extern GoInt Work(GoSlice p0, GoSlice p1, GoInt p2);
 
