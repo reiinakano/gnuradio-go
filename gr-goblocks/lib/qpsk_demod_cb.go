@@ -30,10 +30,10 @@ func Work(in []float32, out []uint8, confIdx int) int {
   conf := Storage[confIdx]
   for i := 0; i < len(in); i++ {
     if (conf.Gray) {
-      out[i] = uint8(in[i]*128)
+      out[i] = uint8(in[i])
     } else {
-	  out[i] = uint8(in[i]*255)
-	}
+      out[i] = uint8(in[i]*255)
+    }
   }
   return len(in)
 }
