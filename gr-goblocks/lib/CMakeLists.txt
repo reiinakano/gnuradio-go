@@ -23,10 +23,13 @@
 ########################################################################
 
 # Build Go files
-execute_process(COMMAND go build -o ${CMAKE_CURRENT_BINARY_DIR}/libgo_qpsk_demod_cb.so -buildmode=c-shared ${CMAKE_CURRENT_SOURCE_DIR}/qpsk_demod_cb.go)
-if (NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/libgo_qpsk_demod_cb.so OR NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/libgo_qpsk_demod_cb.h)
-    message(FATAL_ERROR "go build seems to have failed.")
-endif()
+add_custom_command(
+    OUTPUT libgo_qpsk_demod_cb.so libgo_qpsk_demod_cb.h
+    COMMAND go build -o ${CMAKE_CURRENT_BINARY_DIR}/libgo_qpsk_demod_cb.so -buildmode=c-shared ${CMAKE_CURRENT_SOURCE_DIR}/qpsk_demod_cb.go
+    COMMENT "Building Go C-shared library"
+    DEPENDS qpsk_demod_cb.go
+)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libgo_qpsk_demod_cb.so DESTINATION ${GR_LIBRARY_DIR})
 
 include(GrPlatform) #define LIB_SUFFIX
 
@@ -34,7 +37,7 @@ include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
 
 list(APPEND goblocks_sources
-    qpsk_demod_cb_impl.cc
+    qpsk_demod_cb_impl.cc libgo_qpsk_demod_cb.h
 )
 
 set(goblocks_sources "${goblocks_sources}" PARENT_SCOPE)
@@ -44,7 +47,7 @@ if(NOT goblocks_sources)
 endif(NOT goblocks_sources)
 
 add_library(gnuradio-goblocks SHARED ${goblocks_sources})
-target_link_libraries(gnuradio-goblocks ${Boost_LIBRARIES} ${GNURADIO_ALL_LIBRARIES} ${CMAKE_CURRENT_SOURCE_DIR}/libgo_qpsk_demod_cb.so)
+target_link_libraries(gnuradio-goblocks ${Boost_LIBRARIES} ${GNURADIO_ALL_LIBRARIES} libgo_qpsk_demod_cb.so)
 set_target_properties(gnuradio-goblocks PROPERTIES DEFINE_SYMBOL "gnuradio_goblocks_EXPORTS")
 
 if(APPLE)
