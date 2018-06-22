@@ -21,6 +21,13 @@
 ########################################################################
 # Setup library
 ########################################################################
+
+# Build Go files
+execute_process(COMMAND go build -o ${CMAKE_CURRENT_BINARY_DIR}/libgo_qpsk_demod_cb.so -buildmode=c-shared ${CMAKE_CURRENT_SOURCE_DIR}/qpsk_demod_cb.go)
+if (NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/libgo_qpsk_demod_cb.so OR NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/libgo_qpsk_demod_cb.h)
+    message(FATAL_ERROR "go build seems to have failed.")
+endif()
+
 include(GrPlatform) #define LIB_SUFFIX
 
 include_directories(${Boost_INCLUDE_DIR})

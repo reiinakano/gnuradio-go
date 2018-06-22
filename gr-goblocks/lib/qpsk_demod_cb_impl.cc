@@ -44,10 +44,9 @@ namespace gr {
       : gr::sync_block("qpsk_demod_cb",
               gr::io_signature::make(1, 1, sizeof(float)),
               gr::io_signature::make(1, 1, sizeof(char))),
-        gray_code_(gray_code_)
+        gray_code_(gray_code)
     {
-      if (gray_code) index_ = Init(1);
-      else index_ = Init(0);
+      index_ = Init(gray_code_);
     }
 
     /*
