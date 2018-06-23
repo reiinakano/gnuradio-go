@@ -46,7 +46,9 @@ namespace gr {
               gr::io_signature::make(1, 1, sizeof(char))),
         gray_code_(gray_code)
     {
-      index_ = Init(gray_code_);
+      set_output_multiple_ptr_ = new std::function<void(int)>(boost::bind(&qpsk_demod_cb_impl::set_output_multiple, this, _1));
+      long long set_output_multiple_ptr_int = reinterpret_cast<unsigned long long>(set_output_multiple_ptr_);
+      index_ = Init(gray_code_, set_output_multiple_ptr_int);
     }
 
     /*
@@ -54,6 +56,7 @@ namespace gr {
      */
     qpsk_demod_cb_impl::~qpsk_demod_cb_impl()
     {
+      delete set_output_multiple_ptr_;
     }
 
     int

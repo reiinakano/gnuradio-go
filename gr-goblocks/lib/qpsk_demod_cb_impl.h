@@ -23,6 +23,8 @@
 
 #include <goblocks/qpsk_demod_cb.h>
 
+#include <functional>
+
 namespace gr {
   namespace goblocks {
 
@@ -31,6 +33,7 @@ namespace gr {
      private:
       bool gray_code_;
       long long index_;
+      std::function<void(int)> *set_output_multiple_ptr_;
 
      public:
       qpsk_demod_cb_impl(bool gray_code);

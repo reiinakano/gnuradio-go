@@ -4,6 +4,8 @@ extern "C" {
 
 extern void ExecVoidPtr(unsigned long long ptr) __attribute__((visibility("default")));
 
+extern void _ExecSetOutputMultiple(unsigned long long ptr, int output_multiple) __attribute__((visibility("default")));
+
 extern void MyTest() __attribute__((visibility("default")));
 
 #ifdef __cplusplus
