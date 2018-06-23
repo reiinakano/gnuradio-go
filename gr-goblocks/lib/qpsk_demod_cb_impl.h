@@ -31,7 +31,6 @@ namespace gr {
     class qpsk_demod_cb_impl : public qpsk_demod_cb
     {
      private:
-      bool gray_code_;
       long long index_;
       std::function<void(int)> *set_output_multiple_ptr_;
 

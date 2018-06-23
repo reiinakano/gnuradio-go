@@ -43,12 +43,12 @@ namespace gr {
     qpsk_demod_cb_impl::qpsk_demod_cb_impl(bool gray_code)
       : gr::sync_block("qpsk_demod_cb",
               gr::io_signature::make(1, 1, sizeof(float)),
-              gr::io_signature::make(1, 1, sizeof(char))),
-        gray_code_(gray_code)
+              gr::io_signature::make(1, 1, sizeof(char)))
     {
       set_output_multiple_ptr_ = new std::function<void(int)>(boost::bind(&qpsk_demod_cb_impl::set_output_multiple, this, _1));
       long long set_output_multiple_ptr_int = reinterpret_cast<unsigned long long>(set_output_multiple_ptr_);
-      index_ = Init(gray_code_, set_output_multiple_ptr_int);
+      index_ = QpskDemodCbGoGRInit(set_output_multiple_ptr_int);
+      QpskDemodCbInit(index_, gray_code);
     }
 
     /*
@@ -70,7 +70,7 @@ namespace gr {
       GoSlice go_in = {in, noutput_items, noutput_items};
       GoSlice go_out = {out, noutput_items, noutput_items};
 
-      Work(go_in, go_out, index_);
+      QpskDemodCbWork(go_in, go_out, index_);
       return noutput_items;
     }
 

@@ -54,7 +54,7 @@ if(NOT goblocks_sources)
 endif(NOT goblocks_sources)
 
 add_library(gnuradio-goblocks SHARED ${goblocks_sources})
-target_link_libraries(gnuradio-goblocks ${Boost_LIBRARIES} ${GNURADIO_ALL_LIBRARIES} libgo_qpsk_demod_cb.so)
+target_link_libraries(gnuradio-goblocks ${Boost_LIBRARIES} ${GNURADIO_ALL_LIBRARIES} ${CMAKE_CURRENT_BINARY_DIR}/libgo_qpsk_demod_cb.so)
 set_target_properties(gnuradio-goblocks PROPERTIES DEFINE_SYMBOL "gnuradio_goblocks_EXPORTS")
 
 if(APPLE)
