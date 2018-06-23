@@ -1,6 +1,6 @@
 package main
 
-// #cgo LDFLAGS: -L/home/reiichiro/go/src/shared/gr-goblocks/build/lib -lgo-gnuradio-ptr
+// #cgo LDFLAGS: -L${SRCDIR} -lgo-gnuradio-ptr
 // #include "go_gnuradio.h"
 import "C"
 import (
@@ -19,7 +19,7 @@ var Storage []*Configuration
 func Init(gray bool) int {
   storageMutex.Lock()
   defer storageMutex.Unlock()
-  C.MyTest();
+  C.MyTest()
   config := &Configuration{
     Gray: gray,
   }
