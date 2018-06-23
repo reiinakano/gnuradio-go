@@ -23,11 +23,18 @@
 ########################################################################
 
 # Build Go files
+add_library(go-gnuradio-ptr SHARED go_gnuradio.cc)
+set_property(TARGET go-gnuradio-ptr PROPERTY POSITION_INDEPENDENT_CODE ON)
+install(TARGETS go-gnuradio-ptr 
+        LIBRARY DESTINATION ${GR_LIBRARY_DIR} COMPONENT ${GR_LIBRARY_RUNTIME_COMPONENT} # .so/.dylib file
+        ARCHIVE DESTINATION ${GR_LIBRARY_DIR} COMPONENT ${GR_LIBRARY_DEVEL_COMPONENT}   # .lib file
+        RUNTIME DESTINATION ${GR_RUNTIME_DIR} COMPONENT ${GR_LIBRARY_RUNTIME_COMPONENT} # .dll file
+    )
 add_custom_command(
     OUTPUT libgo_qpsk_demod_cb.so libgo_qpsk_demod_cb.h
     COMMAND go build -o ${CMAKE_CURRENT_BINARY_DIR}/libgo_qpsk_demod_cb.so -buildmode=c-shared ${CMAKE_CURRENT_SOURCE_DIR}/qpsk_demod_cb.go
     COMMENT "Building Go C-shared library"
-    DEPENDS qpsk_demod_cb.go
+    DEPENDS qpsk_demod_cb.go go-gnuradio-ptr
 )
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libgo_qpsk_demod_cb.so DESTINATION ${GR_LIBRARY_DIR})
 
@@ -47,7 +54,7 @@ if(NOT goblocks_sources)
 endif(NOT goblocks_sources)
 
 add_library(gnuradio-goblocks SHARED ${goblocks_sources})
-target_link_libraries(gnuradio-goblocks ${Boost_LIBRARIES} ${GNURADIO_ALL_LIBRARIES} libgo_qpsk_demod_cb.so)
+target_link_libraries(gnuradio-goblocks ${Boost_LIBRARIES} ${GNURADIO_ALL_LIBRARIES} libgo_qpsk_demod_cb.so go-gnuradio-ptr)
 set_target_properties(gnuradio-goblocks PROPERTIES DEFINE_SYMBOL "gnuradio_goblocks_EXPORTS")
 
 if(APPLE)
