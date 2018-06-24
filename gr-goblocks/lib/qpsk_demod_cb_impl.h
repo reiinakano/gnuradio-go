@@ -36,6 +36,7 @@ namespace gr {
       std::function<void(int)> *set_output_multiple_ptr_;
       std::function<unsigned int()> *history_ptr_;
       std::function<void(unsigned int)> *set_history_ptr_;
+      std::function<int()> *alignment_ptr_;
       std::function<void(int)> *set_alignment_ptr_;
 
      public:

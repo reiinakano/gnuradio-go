@@ -17,6 +17,7 @@ type _goGRStruct struct {
   set_output_multiple_ptr uint64
   history_ptr uint64
   set_history_ptr uint64
+  alignment_ptr uint64
   set_alignment_ptr uint64
 }
 
@@ -24,7 +25,13 @@ var _QpskDemodCbStorageMutex sync.Mutex
 var _QpskDemodCbStorage []*QpskDemodCb
 
 //export QpskDemodCbGoGRInit
-func QpskDemodCbGoGRInit(output_multiple_ptr, set_output_multiple_ptr, history_ptr, set_history_ptr, set_alignment_ptr uint64) int {
+func QpskDemodCbGoGRInit(
+  output_multiple_ptr, 
+  set_output_multiple_ptr, 
+  history_ptr, 
+  set_history_ptr, 
+  alignment_ptr, 
+  set_alignment_ptr uint64) int {
   _QpskDemodCbStorageMutex.Lock()
   defer _QpskDemodCbStorageMutex.Unlock()
   block := &QpskDemodCb{
@@ -33,6 +40,7 @@ func QpskDemodCbGoGRInit(output_multiple_ptr, set_output_multiple_ptr, history_p
       set_output_multiple_ptr: set_output_multiple_ptr,
       history_ptr: history_ptr,
       set_history_ptr: set_history_ptr,
+      alignment_ptr: alignment_ptr,
       set_alignment_ptr: set_alignment_ptr,
     },
   }
@@ -68,6 +76,10 @@ func (block *QpskDemodCb) History() uint32 {
 
 func(block *QpskDemodCb) SetHistory(history uint32) {
   C._ExecSetHistory(C.ulonglong(block._go.set_history_ptr), C.uint(history))
+}
+
+func (block *QpskDemodCb) Alignment() int32 {
+  return int32(C._ExecOutputMultiple(C.ulonglong(block._go.alignment_ptr)))
 }
 
 func (block *QpskDemodCb) SetAlignment(multiple int32) {
