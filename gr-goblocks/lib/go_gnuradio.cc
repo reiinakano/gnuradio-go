@@ -9,6 +9,12 @@ extern "C" void ExecVoidPtr(unsigned long long ptr) {
     (*f)();
 }
 
+extern "C" int _ExecOutputMultiple(unsigned long long ptr) {
+    std::function<int()> *f = 
+        reinterpret_cast<std::function<int()> *>(ptr);
+    return (*f)();
+}
+
 extern "C" void _ExecSetOutputMultiple(unsigned long long ptr, int output_multiple) {
     std::function<void(int)> *f = 
         reinterpret_cast<std::function<void(int)> *>(ptr);

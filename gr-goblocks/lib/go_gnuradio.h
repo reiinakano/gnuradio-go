@@ -4,6 +4,8 @@ extern "C" {
 
 extern void ExecVoidPtr(unsigned long long ptr) __attribute__((visibility("default")));
 
+extern int _ExecOutputMultiple(unsigned long long ptr) __attribute__((visibility("default")));
+
 extern void _ExecSetOutputMultiple(unsigned long long ptr, int output_multiple) __attribute__((visibility("default")));
 
 extern unsigned int _ExecHistory(unsigned long long ptr) __attribute__((visibility("default")));

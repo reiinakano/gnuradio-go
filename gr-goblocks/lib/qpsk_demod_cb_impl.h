@@ -32,9 +32,11 @@ namespace gr {
     {
      private:
       long long __go_gnuradio_index;
+      std::function<int()> *output_multiple_ptr_;
       std::function<void(int)> *set_output_multiple_ptr_;
       std::function<unsigned int()> *history_ptr_;
       std::function<void(unsigned int)> *set_history_ptr_;
+      std::function<void(int)> *set_alignment_ptr_;
 
      public:
       qpsk_demod_cb_impl(bool gray_code);
