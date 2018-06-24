@@ -31,7 +31,7 @@ namespace gr {
     class qpsk_demod_cb_impl : public qpsk_demod_cb
     {
      private:
-      long long index_;
+      long long __go_gnuradio_index;
       std::function<void(int)> *set_output_multiple_ptr_;
 
      public:
