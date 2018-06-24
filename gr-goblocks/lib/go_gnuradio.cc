@@ -21,6 +21,12 @@ extern "C" unsigned int _ExecHistory(unsigned long long ptr) {
     return (*f)();
 }
 
+extern "C" void _ExecSetHistory(unsigned long long ptr, unsigned int history) {
+    std::function<void(int)> *f = 
+        reinterpret_cast<std::function<void(int)> *>(ptr);
+    (*f)(history);
+}
+
 extern "C" void MyTest() {
     std::cout << "DSFASFSADFFAFAS" << std::endl;
 }
