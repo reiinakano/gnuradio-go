@@ -15,6 +15,12 @@ extern "C" void _ExecSetOutputMultiple(unsigned long long ptr, int output_multip
     (*f)(output_multiple);
 }
 
+extern "C" unsigned int _ExecHistory(unsigned long long ptr) {
+    std::function<unsigned int()> *f = 
+        reinterpret_cast<std::function<unsigned int()> *>(ptr);
+    return (*f)();
+}
+
 extern "C" void MyTest() {
     std::cout << "DSFASFSADFFAFAS" << std::endl;
 }

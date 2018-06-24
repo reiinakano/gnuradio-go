@@ -33,6 +33,7 @@ namespace gr {
      private:
       long long __go_gnuradio_index;
       std::function<void(int)> *set_output_multiple_ptr_;
+      std::function<unsigned int()> *history_ptr_;
 
      public:
       qpsk_demod_cb_impl(bool gray_code);
