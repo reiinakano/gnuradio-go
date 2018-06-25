@@ -33,6 +33,12 @@ extern "C" void _ExecSetHistory(unsigned long long ptr, unsigned int history) {
     (*f)(history);
 }
 
+extern "C" void _ExecConsume(unsigned long long ptr, int which_input, int how_many_items) {
+    std::function<void(int, int)> *f =
+        reinterpret_cast<std::function<void(int, int)> *>(ptr);
+    (*f)(which_input, how_many_items);
+}
+
 extern "C" void MyTest() {
     std::cout << "DSFASFSADFFAFAS" << std::endl;
 }

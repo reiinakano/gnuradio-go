@@ -38,6 +38,8 @@ namespace gr {
       std::function<void(unsigned int)> *set_history_ptr_;
       std::function<int()> *alignment_ptr_;
       std::function<void(int)> *set_alignment_ptr_;
+      std::function<void(int)> *consume_each_ptr_;
+      std::function<void(int, int)> *consume_ptr_;
 
      public:
       qpsk_demod_cb_impl(bool gray_code);
