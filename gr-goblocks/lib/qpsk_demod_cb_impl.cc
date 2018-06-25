@@ -98,6 +98,14 @@ namespace gr {
       return QpskDemodCbWork(go_in, go_out, __go_gnuradio_index);
     }
 
+    bool qpsk_demod_cb_impl::start() {
+      return QpskDemodCbStart(__go_gnuradio_index);
+    }
+
+    bool qpsk_demod_cb_impl::stop() {
+      return QpskDemodCbStop(__go_gnuradio_index);
+    }
+
   } /* namespace goblocks */
 } /* namespace gr */
 

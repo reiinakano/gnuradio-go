@@ -56,16 +56,28 @@ func QpskDemodCbGoGRInit(
 }
 
 //export QpskDemodCbWork
-func QpskDemodCbWork(in []float32, out []uint8, idx int) int {
-  block := _QpskDemodCbStorage[idx]
+func QpskDemodCbWork(in []float32, out []uint8, __go_gnuradio_index int) int {
+  block := _QpskDemodCbStorage[__go_gnuradio_index]
   return block.Work(in, out) // This could be unnecessary overhead?
 }
 
+//export QpskDemodCbStart
+func QpskDemodCbStart(__go_gnuradio_index int) bool {
+  block := _QpskDemodCbStorage[__go_gnuradio_index]
+  return block.Start()
+}
+
+//export QpskDemodCbStop
+func QpskDemodCbStop(__go_gnuradio_index int) bool {
+  block := _QpskDemodCbStorage[__go_gnuradio_index]
+  return block.Stop()
+}
+
 //export QpskDemodCbDelete
-func QpskDemodCbDelete(idx int) {
+func QpskDemodCbDelete(__go_gnuradio_index int) {
   _QpskDemodCbStorageMutex.Lock()
   defer _QpskDemodCbStorageMutex.Unlock()
-  _QpskDemodCbStorage[idx] = nil
+  _QpskDemodCbStorage[__go_gnuradio_index] = nil
 }
 
 func (block *QpskDemodCb) OutputMultiple() int32 {
@@ -122,6 +134,18 @@ func QpskDemodCbInit(__go_gnuradio_index int, gray_code bool) {
   // You can also call setup functions such as set_output_multiple e.g.
   // block.SetOutputMultiple(64)
   block.GrayCode = gray_code
+}
+
+func (block *QpskDemodCb) Start() bool {
+  // Start drivers, etc. here.
+  fmt.Println("Starting block!")
+  return true
+}
+
+func (block *QpskDemodCb) Stop() bool {
+  // Stop drivers, etc. here.
+  fmt.Println("Stopping block!")
+  return true
 }
 
 func (block *QpskDemodCb) Work(in []float32, out []uint8) int {
