@@ -59,7 +59,7 @@ func QpskDemodCbGoGRInit(
 }
 
 //export QpskDemodCbWork
-func QpskDemodCbWork(in []float32, out []uint8, __go_gnuradio_index int) int {
+func QpskDemodCbWork(in []complex64, out []uint8, __go_gnuradio_index int) int {
   block := _QpskDemodCbStorage[__go_gnuradio_index]
   return block.Work(in, out) // This could be unnecessary overhead?
 }
@@ -155,17 +155,38 @@ func (block *QpskDemodCb) Stop() bool {
   return true
 }
 
-func (block *QpskDemodCb) Work(in []float32, out []uint8) int {
+func (block *QpskDemodCb) Work(in []complex64, out []uint8) int {
   // Signal processing is done here. Place your results directly in `out`.
   // Do NOT modify `in` or you will break things! Go does not have const references. 
   for i := 0; i < len(in); i++ {
-    if (block.GrayCode) {
-      out[i] = uint8(in[i])
-    } else {
-      out[i] = uint8(in[i]*255)
-    }
+    out[i] = block.getMinimumDistances(in[i])
   }
   return len(in)
+}
+
+func (block *QpskDemodCb) getMinimumDistances(sample complex64) uint8 {
+  if (block.GrayCode) {
+    var bit0 uint8
+    var bit1 uint8
+    if (real(sample) < 0) {
+      bit0 = 1
+    }
+    if (imag(sample) < 0) {
+      bit1 = 1 << 1
+    }
+    return bit0 | bit1
+  } else {
+    if (imag(sample) >= 0 && real(sample) >= 0) {
+      return 0
+    } else if (imag(sample) >= 0 && real(sample) < 0) {
+      return 1
+    } else if (imag(sample) < 0 && real(sample) < 0) {
+      return 2
+    } else if (imag(sample) < 0 && real(sample) >= 0) {
+      return 3
+    }
+  }
+  return 0
 }
 
 func main() {}

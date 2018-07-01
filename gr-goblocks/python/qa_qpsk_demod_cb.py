@@ -34,13 +34,15 @@ class qa_qpsk_demod_cb (gr_unittest.TestCase):
 
     def test_001_gray_code_enabled (self):
         # "Construct the Iphase and Qphase components"
-        src_data = array([ 12.3, 23.2, 1, 0])
+        Iphase = array([ 1, -1, -1,  1])
+        Qphase = array([ 1,  1, -1, -1])
+        src_data = Iphase + 1j*Qphase
         # "Enable Gray code"
         gray_code =  True
         # "Determine the expected result"
-        expected_result = (12, 23, 1, 0)
+        expected_result = (0,1,3,2)
         # "Create a complex vector source"
-        src = blocks.vector_source_f(src_data)
+        src = blocks.vector_source_c(src_data)
         # "Instantiate the test module"
         qpsk_demod = goblocks.qpsk_demod_cb(gray_code)
         # "Instantiate the binary sink"
@@ -57,13 +59,15 @@ class qa_qpsk_demod_cb (gr_unittest.TestCase):
 
     def test_002_gray_code_disabled (self):
         # "Construct the Iphase and Qphase components"
-        src_data = array([ 0, 0.2, 0.5, 1])
-        # "Disable Gray code"
+        Iphase = array([ 1, -1, -1,  1])
+        Qphase = array([ 1,  1, -1, -1])
+        src_data = Iphase + 1j*Qphase
+        # "Enable Gray code"
         gray_code =  False
         # "Determine the expected result"
-        expected_result = (0, 51, 127, 255)
+        expected_result = (0,1,2,3)
         # "Create a complex vector source"
-        src = blocks.vector_source_f(src_data)
+        src = blocks.vector_source_c(src_data)
         # "Instantiate the test module"
         qpsk_demod = goblocks.qpsk_demod_cb(gray_code)
         # "Instantiate the binary sink"
